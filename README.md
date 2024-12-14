@@ -1,15 +1,22 @@
-# Data-Analyst-rudra
+# Data-Analyst-Rudra
+
 In today's era of data-driven decision-making, efficiently extracting, processing, and analyzing data has become a critical skill for both organizations and individuals. This project centers on the development and implementation of a Data Analytics Platform (DAP) utilizing AWS cloud-based services, applied specifically to the ‘Parks, recreation and pets – Parks’ dataset from Vancouver's Open Data portal. The main goal is to unlock the potential of data to derive meaningful insights, such as analyzing the distribution of Facilities in Parks in Vancouver. By utilizing AWS tools like Amazon S3, AWS Glue DataBrew, and AWS Glue, this project establishes a systematic framework for data ingestion, profiling, cleansing, and transformation. The result is a robust pipeline that supports both descriptive and exploratory analysis, showcasing the value of cloud-based analytics in driving informed decisions and generating actionable insights.
+
 # Data Selection
+
 For my part, I chose the ‘Parks, recreation and pets – Parks’ dataset from https://opendata.vancouver.ca/explore/dataset/parks/analyze/?dataChart=eyJxdWVyaWVzIjpbeyJjaGFydHMiOlt7InR5cGUiOiJjb2x1bW4iLCJmdW5jIjoiQ09VTlQiLCJ5QXhpcyI6ImhlY3RhcmUiLCJzY2llbnRpZmljRGlzcGxheSI6dHJ1ZSwiY29sb3IiOiIjMDI3OUIxIn1dLCJ4QXhpcyI6Im5laWdoYm91cmhvb2RuYW1lIiwibWF4cG9pbnRzIjo1MCwic29ydCI6InNlcmllMS0xIiwic2VyaWVzQnJlYWtkb3duVGltZXNjYWxlIjoiIiwiY29uZmlnIjp7ImRhdGFzZXQiOiJwYXJrcyIsIm9wdGlvbnMiOnt9fX1dLCJ0aW1lc2NhbGUiOiIiLCJkaXNwbGF5TGVnZW5kIjp0cnVlLCJhbGlnbk1vbnRoIjp0cnVlfQ%3D%3D
+
 <img width="452" alt="image" src="https://github.com/user-attachments/assets/c64d0edb-b1ca-42f8-a484-7e7ab919ab92" />
+
 # Descriptiva Analysis
+
 The main goal of performing Descriptive Analysis from the available data was to get information regarding the area that has the maximum number of Hectare in the city of Vancouver. Analyzing this on the opendata.vancouver website, we get the following column chart, where the maximum number of neighbourhood names are from West End (416), followed by Killarney(166). This graph should be the target of our Data Analytics process and the result after all the 4 steps should match this graph.
 Column Chart showing the total number of Hectare from each neighbouring names.
 
 <img width="414" alt="image" src="https://github.com/user-attachments/assets/5e444eff-9ce6-4f21-be1c-a6c6e827cd5c" />
 
 # Data Storage
+
 Based on my dataset, to store the data, three buckets were created:
 
 1. prp-parks-raw-rudra
@@ -18,25 +25,29 @@ Based on my dataset, to store the data, three buckets were created:
 <img width="452" alt="image" src="https://github.com/user-attachments/assets/fba03d2f-cbd8-40cd-b67e-c41f7596c73d" />
 
 # Draw io representation
+
 <img width="452" alt="image" src="https://github.com/user-attachments/assets/f3620b53-435d-4659-b63f-78c02ee9bb1a" />
 
 The development of this DAP utilized AWS services including Amazon S3, AWS Glue DataBrew, and AWS Glue. The implementation, as depicted in the accompanying figure, involves the use of various buckets and processes. Initially, data is ingested into a raw bucket on AWS. It is then processed using DataBrew, where tasks such as profiling and cleaning are performed. The processed data is subsequently stored in a transformed (trf) bucket. Following this, an ETL (Extract, Transform, Load) pipeline processes the transformed data to generate final outputs, which are saved in a curated bucket organized into two folders—system and user—catering to specific operational requirements.
+
 # Step 1 Data Ingestion
+
 The first step of designing any DAP is to fetch the structured dataset from the source. Data can be uploaded into the raw bucket either in an Excel, or CSV file, however, as per our requirements, excel is more suitable.
 
 <img width="452" alt="image" src="https://github.com/user-attachments/assets/f995192e-15cd-4fb5-86ea-d78d374739c2" />
 
 # Step 2 Data Profiling
+
 The next step after Data Ingestion is Data Profiling, that is done using the AWS ‘Glue Data Brew’ service. It is done to understand the quality of data ingested and make changes to the data as per it’s requirement.
 
 <img width="452" alt="image" src="https://github.com/user-attachments/assets/a619f319-9a61-4950-be5f-ffd0eed8c46c" />
 
-Result of Data Profiling
+**_Result of Data Profiling_**
 To connect the two services, a dataset is first created to establish the integration. Following this, the profiling process is executed by setting up projects and running recipe jobs.
 
 <img width="452" alt="image" src="https://github.com/user-attachments/assets/1b6df0b4-bf79-4614-bbc8-8d26c6d2ffef" />
 
-_Recipe Jobs_
+**_Recipe Jobs_**
 
 # Step 3 Data Cleaning
 
