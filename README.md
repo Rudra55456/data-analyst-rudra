@@ -93,3 +93,93 @@ For exploratory analysis, instead of using ‘Aggregate’ in the ETL pipeline, 
 <img width="366" alt="image" src="https://github.com/user-attachments/assets/b2b9b064-205c-46f1-a3cf-54e70150b1dd" />
 
 <img width="378" alt="image" src="https://github.com/user-attachments/assets/86dd7622-0c02-4ed4-8b90-f7ddcdc6e38c" />
+
+# Step 5: Data Enriching
+
+Data is first transferred up from a web server to an S3 raw bucket as an additional set of data required for evaluation. This data is processed with DataBrew, selected non-relevant columns are excluded and cleaned before being stored in the transformed bucket. Further down the line, Glue services assist in formulating a pipeline using two datasets, before coming up with the last enriched report. Later on, it is possible to use SQL queries to obtain the required data from AWS Athena.
+	Further, we use AWS Key Management Services to encrypt the data which is being held in S3. The details generated are checked against organizational and regulatory requirement before using AWS CloudWatch to develop a dashboard where the insights are reported.
+
+**_S3 Endpoint_**
+
+Data from the web server goes through an S3 endpoint before finally reaching the destination bucket.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/62cea36f-0fb2-4af2-a6d1-2745ecfb5d82" />
+
+**_Ingestion Successful_**
+
+After successful ingestion, we can see the ClickStream file getting stored in the S3 raw bucket automatically.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/f4b17872-6f86-42c1-a967-0a03c7358faf" />
+
+**_Categorical Mapping_**
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/10ee76f8-ecc9-4e48-9a7c-2d46073bbdc5" />
+
+**_ETL Pipeline_**
+
+Two datasets were used as inputs to produce an enriched output. The ‘Parks’ dataset contains the original cleaned data, while the ‘Parks ClickStream’ provides categorical mapping information. As illustrated in the image below, we selected the Park ID from ‘Parks’ and after renaming the keys in the ‘Parks_ClickStream’, we joined them using the Park ID as the primary key. After merging them, we rearranged the columns and created two partitions for user accessibility. Once everything was set up in this pipeline, we simply clicked "run" to execute it.
+
+ <img width="452" alt="image" src="https://github.com/user-attachments/assets/6993e689-6c0a-44ae-99fe-27f23ba2e596" />
+
+**_SQL Query for Enriched Data_**
+
+After selecting the file, I clicked on 'Action' to choose a query with SQL. Depending on the requirements, different SQL scripts can be executed. Below is an example of a query used to view data stored in the file.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/0808ab18-52f0-4b1b-8aa5-2838a8375405" />
+
+**_Crawlers_**
+Crawlers are used to put all the data stored in S3 Buckets in the form of tables. Since we had three buckets, we created 3 crawlers to extract metadata and update the catalog.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/ca9ab8bb-23f3-4482-9283-52fe428bf420" />
+
+**_Athena_**
+
+Another AWS Service named Athena is used to query and analyze data stored in S3 buckets. In the screenshot below, we selected the "cur-user" table, and the results are displayed.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/2fa93b0b-dd48-4afc-9fff-f84331eaa03b" />
+
+# Step 6: Data Protection
+
+The Key Management Service (KMS) is available to protect data within AWS. It encrypts information using symmetric or asymmetric keys. We can generate a new key and utilize it to secure any transmitted or received data. Below is the key we created to protect our data.
+
+**_Key Creation_**
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/88846766-362b-4255-80a1-9a01f98084c9" />
+
+**_Bucket Versioning_**
+
+It helps to have multiple versions of objects within the bucket provided by this feature. Every time changes are made in any object then a new copy is generated, which will enable us to save other versions in case they can be used in the future.
+
+**_Replication Rule_**
+
+The replication rule is one that is designed to make copies of objects as soon as it from the original bucket to the backups. This is helpful for purposes of backing up data in the event that an event occurs that degrades objects in the original bucket. For this a ‘raw-backup’ bucket was created.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/2a2eb17a-3abf-450d-a200-116386159d81" />
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/7ffb3062-5dae-4474-9462-48e3800984a3" />
+
+# Step 7: Data Governance
+
+AWS data governance is a set of policies, practices, and norms to ensure that all data stored in AWS is secure, easily to manage, and used properly. This framework allows only the given users to access the system while making it secure to meet set laws and policies set by the company. It also protects information by hiding the private data from understanding by persons who are not authorized to do so.
+
+**_ETL Pipeline_**
+
+The following pipeline ensures that the data samples go through all the requisite steps to avoid compliance before being stored in the correct S3 bucket.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/5a82be02-7b3b-482c-8432-10d93e48b908" />
+
+**_AWS Glue Folders_**
+
+Listed below are the folders designed for the pipeline and linked to their respective targets. Based on the output (Passed/Failed), data will be automatically stored in them.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/696d349e-97a2-41c6-a6ed-f494b8ef68c8" />
+
+# Step 8: Data Observatory
+
+**_Dashboard_**
+
+This feature allows the monitoring of some activities through creation of the widgets. Below figure presents the widgets for the total objects in each of the buckets, bucket size, the estimated cost, alarms and logs.
+
+<img width="452" alt="image" src="https://github.com/user-attachments/assets/0e2a2f39-74f5-4e37-86df-3f4b4956e591" />
+
+# Conclusion
